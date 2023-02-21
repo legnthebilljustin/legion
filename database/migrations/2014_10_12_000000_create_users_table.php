@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('password');
             $table->string('key_for_accounts')->nullable()->default(null);
-            $table->longText('tutorials')->default("{}");
+            $table->longText('tutorials')->nullable()->default(null);
             $table->rememberToken();
             $table->timestamps();
         });
