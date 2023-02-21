@@ -33,7 +33,7 @@ class Authentication extends Controller
 
     public function register(AuthenticationRequest $request) {
         $validated = $request->validated();
-
+        
         $validated['password'] = Hash::make($validated['password']);
         $user = User::create($validated);
 
