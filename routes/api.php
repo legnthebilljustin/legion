@@ -25,6 +25,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('/accounts', AccountsController::class);
 });
 
+Route::prefix('/megatalking')->group(function() {
+
+});
+
 
 Route::get('/connection-test', function() {
     return response('you are connected');
