@@ -12,6 +12,13 @@ class UnitPagoda extends Model
 {
     use HasFactory;
 
+    public $guarded = [];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
     public function course() : BelongsTo
     {
         return $this->belongsTo(Course::class);
