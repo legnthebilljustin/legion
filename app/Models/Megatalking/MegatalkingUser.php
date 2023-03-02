@@ -10,4 +10,6 @@ class MegatalkingUser extends Model
     use HasFactory;
 
     public $guarded = [];
+
+    protected $hidden = ['password', 'created_at', 'updated_at'];
 }

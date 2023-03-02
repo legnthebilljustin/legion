@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\DataController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication;
+use App\Http\Controllers\Megatalking\AuthController;
+use App\Http\Controllers\Megatalking\UsersController;
 use App\Http\Controllers\Persona\AccountsController;
-use App\Models\User;
+
 
 // Route::post('/testing', [DataController::class, 'testing']);
 
@@ -26,7 +26,9 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 Route::prefix('/megatalking')->group(function() {
+    Route::post('/login', [AuthController::class, 'login']);
 
+    Route::resource('/users', UsersController::class);
 });
 
 

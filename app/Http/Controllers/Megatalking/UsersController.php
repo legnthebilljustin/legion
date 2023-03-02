@@ -3,83 +3,47 @@
 namespace App\Http\Controllers\Megatalking;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Megatalking\UserRequest;
+use App\Models\Megatalking\MegatalkingUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $users = MegatalkingUser::all();
+        return response()->success($users);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(UserRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $validated['password'] = Hash::make($validated['password']);
+        $user = MegatalkingUser::create($validated->all());
+        return response()->success('', "An account for <b> $user->firstname $user->lastname </b> has been created.");
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        $user = MegatalkingUser::findOrFail($id);
+        return response()->success($user);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        //
+        // this is only used to update user status
+        $user = MegatalkingUser::findOrFail($id);
+        $user->status = !$user->status;
+        $user->save();
+
+        return response()->success('', "User $id status has been updated.");
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        //
+        MegatalkingUser::destroy($id);
+        return response()->success('', "User $id has been deleted.");
     }
 }
