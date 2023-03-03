@@ -3,9 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Megatalking\AuthController;
+use App\Http\Controllers\Megatalking\CoursesController;
 use App\Http\Controllers\Megatalking\UsersController;
 use App\Http\Controllers\Persona\AccountsController;
-
+use App\Models\Megatalking\MegatalkingUser;
 
 // Route::post('/testing', [DataController::class, 'testing']);
 
@@ -28,7 +29,11 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::prefix('/megatalking')->group(function() {
     Route::post('/login', [AuthController::class, 'login']);
 
-    Route::resource('/users', UsersController::class);
+    Route::middleware('auth:sanctum')->group(function() {
+        Route::resource('/users', MegatalkingUser::class)->middleware(['ability:users:*']);
+
+        Route::resource('/courses', CoursesController::class);
+    });
 });
 
 

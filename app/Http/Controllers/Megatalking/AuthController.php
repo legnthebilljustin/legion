@@ -7,7 +7,6 @@ use App\Models\Megatalking\MegatalkingUser;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use stdClass;
 
 class AuthController extends Controller
 {
@@ -25,15 +24,15 @@ class AuthController extends Controller
 
         $abilities = $this->attach_abilities($user->role);
         $expiry = Carbon::now()->addHours(8);
-        $token = $user->createToken($user->username, $abilities, $expiry)->plainTextToken();
+        $token = $user->createToken($user->username, $abilities, $expiry)->plainTextToken;
         
         return response()->success(['user' => $user, 'token' => $token]);
     }
 
     private function attach_abilities($role) {
         $abilities = [
-            'dev' => ['server:*'],
-            'admin' => ['data:delete', 'data:create', 'data:update', 'user:add', 'user:create', 'user:status-update', 'user:delete'],
+            'dev' => ['server:*', 'data:*', 'user:*'],
+            'admin' => ['data:delete', 'data:create', 'data:update', 'user:*'],
             'editor' => ['data:*'],
             'guest' => ['data:read']
         ];
