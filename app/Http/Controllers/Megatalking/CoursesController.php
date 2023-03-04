@@ -20,7 +20,7 @@ class CoursesController extends Controller
 
         Course::create([
             'title' => $validated['title'],
-            'type' => $validated['type']
+            'type' => $request['type']
         ]);
 
         return response()->success('', 'Course created.');
@@ -36,7 +36,7 @@ class CoursesController extends Controller
 
         $course = Course::findOrFail($id);
         $course->title = $validated['title'];
-        $course->type = $validated['type'];
+        $course->type = $request['type'];
         $course->save();
 
         return response()->success('', "Course $course->title have  been updated.");

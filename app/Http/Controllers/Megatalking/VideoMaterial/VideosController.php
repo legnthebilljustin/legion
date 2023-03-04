@@ -44,9 +44,15 @@ class VideosController extends Controller
         return response()->success($data);
     }
 
-    public function update(Request $request, $id)
+    public function update(VideoFormRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $video = Video::findOrFail($id);
+        $video->title = $validated->title;
+        $video->save();
+
+        return response()->success('', "Video $validated->title have been updated.");
     }
 
     public function destroy(Request $request, $id)

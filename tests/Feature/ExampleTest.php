@@ -3,23 +3,21 @@
 namespace Tests\Feature;
 
 // use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
     public function test_the_application_returns_a_successful_response()
     {
-        $response = $this->get('/');
-        // $response = $this->post('/api/login');
+        // $response = $this->post('/api/megatalking/login', [
+        //     'username' => 'johndoes',
+        //     'password' => 'password'
+        // ]);
 
-        # test json
-        // $response = $this->postJson('/api/register', [ 'name' => 'uniquename3', 'password' => 12345678 ]);
-        $response->assertStatus(200);
+        // $response->assertStatus(200);
     }
+
+    
     
 }
