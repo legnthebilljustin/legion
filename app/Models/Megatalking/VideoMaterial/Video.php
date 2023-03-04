@@ -2,9 +2,11 @@
 
 namespace App\Models\Megatalking\VideoMaterial;
 
+use App\Models\Megatalking\Videomaterial\Content;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Video extends Model
 {
@@ -21,5 +23,10 @@ class Video extends Model
 
     public function unit() : BelongsTo {
         return $this->belongsTo(UnitVideoMaterial::class);
+    }
+
+    public function contents() : HasMany
+    {
+        return $this->hasMany(Content::class)->orderBy('start_time', 'ASC');
     }
 }

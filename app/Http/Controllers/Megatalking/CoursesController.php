@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Megatalking;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Megatalking\MaterialRequest;
 use App\Models\Megatalking\Course;
+use Illuminate\Http\Request;
 
 class CoursesController extends Controller
 {
@@ -15,7 +16,7 @@ class CoursesController extends Controller
 
     public function store(MaterialRequest $request) 
     {
-        $validated = $request->safe()->only(['title', 'type']);
+        $validated = $request->safe()->only(['title']);
 
         Course::create([
             'title' => $validated['title'],
@@ -26,12 +27,12 @@ class CoursesController extends Controller
     }
 
     public function show($id) {
-        Course::findOrFail($id);
+        // Course::findOrFail($id);
 
     }
 
     public function update(MaterialRequest $request, $id) {
-        $validated = $request->safe()->only(['title', 'type']);
+        $validated = $request->safe()->only(['title']);
 
         $course = Course::findOrFail($id);
         $course->title = $validated['title'];
@@ -41,10 +42,14 @@ class CoursesController extends Controller
         return response()->success('', "Course $course->title have  been updated.");
     }
 
-    public function delete($id) {
-        $course = Course::findOrFail($id);
-        Course::destroy($id);
+    public function destroy(Request $request, $id) {
+        if ($request->user()->tokenCan('data:delete')) {
+            Course::destroy($id);
 
-        return response()->success('', "$course->title have been deleted.");
+            return response()->success('', "Course have been deleted.");
+        }
+        else {
+            return response()->error('You are not authorized to make that request.', 405);
+        }
     }
 }

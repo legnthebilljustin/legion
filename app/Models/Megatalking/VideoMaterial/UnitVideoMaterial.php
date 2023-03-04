@@ -29,7 +29,7 @@ class UnitVideoMaterial extends Model
         return $this->hasOne(Video::class);
     }
 
-    public function stepthree() : HasMany {
+    public function stepthrees() : HasMany {
         return $this->hasMany(StepThree::class);
     }
 }

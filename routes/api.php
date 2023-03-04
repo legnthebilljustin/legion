@@ -5,8 +5,11 @@ use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Megatalking\AuthController;
 use App\Http\Controllers\Megatalking\CoursesController;
 use App\Http\Controllers\Megatalking\UsersController;
+use App\Http\Controllers\Megatalking\VideoMaterial\ContentsController;
+use App\Http\Controllers\Megatalking\VideoMaterial\TipsController;
+use App\Http\Controllers\Megatalking\VideoMaterial\UnitsController;
+use App\Http\Controllers\Megatalking\VideoMaterial\VideosController;
 use App\Http\Controllers\Persona\AccountsController;
-use App\Models\Megatalking\MegatalkingUser;
 
 // Route::post('/testing', [DataController::class, 'testing']);
 
@@ -30,9 +33,22 @@ Route::prefix('/megatalking')->group(function() {
     Route::post('/login', [AuthController::class, 'login']);
 
     Route::middleware('auth:sanctum')->group(function() {
-        Route::resource('/users', MegatalkingUser::class)->middleware(['ability:users:*']);
+        Route::resource('/users', UsersController::class)->middleware(['ability:users:*']);
 
-        Route::resource('/courses', CoursesController::class);
+        Route::resource('/courses', CoursesController::class)->except(['show']);
+
+        Route::prefix('/videomaterial')->group(function() {
+            Route::resource('/units', UnitsController::class);
+            Route::resource('/videos', VideosController::class);
+            Route::resource('/contents', ContentsController::class);
+            Route::resource('/tips', TipsController::class);
+        });
+        Route::prefix('/pagoda')->group(function() {
+
+        });
+        Route::prefix('/webbooks')->group(function() {
+
+        });
     });
 });
 
