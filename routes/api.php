@@ -6,6 +6,7 @@ use App\Http\Controllers\Megatalking\AuthController;
 use App\Http\Controllers\Megatalking\CoursesController;
 use App\Http\Controllers\Megatalking\UsersController;
 use App\Http\Controllers\Megatalking\VideoMaterial\ContentsController;
+use App\Http\Controllers\Megatalking\VideoMaterial\StepThreesController;
 use App\Http\Controllers\Megatalking\VideoMaterial\TipsController;
 use App\Http\Controllers\Megatalking\VideoMaterial\UnitsController;
 use App\Http\Controllers\Megatalking\VideoMaterial\VideosController;
@@ -39,6 +40,7 @@ Route::prefix('/megatalking')->group(function() {
 
         Route::prefix('/videomaterial')->group(function() {
             Route::resource('/units', UnitsController::class);
+            Route::resource('/step-threes', StepThreesController::class)->except(['index']);
             Route::resource('/videos', VideosController::class);
             Route::resource('/contents', ContentsController::class);
             Route::resource('/tips', TipsController::class)->except(['show']);
