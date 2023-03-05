@@ -9,7 +9,7 @@ use Tests\TestCase;
 class VideoMaterialTest extends TestCase
 {
     private $headers = [
-        'Authorization' => 'Bearer 1|Mx2t0UMeG6pFTxe7fcYjLYnd00CAkolkhjh8vubD'
+        'Authorization' => 'Bearer 2|oNaVPqEXjTm0AWca1EgpvNBAEnfFWTalR0V5xrmU'
     ];
 
     public function testCoursesCreate()

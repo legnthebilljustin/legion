@@ -3,83 +3,45 @@
 namespace App\Http\Controllers\Megatalking\VideoMaterial;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Megatalking\TipsFormRequest;
+use App\Models\Megatalking\VideoMaterial\Tip;
 use Illuminate\Http\Request;
 
 class TipsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $tips = Tip::all();
+        return response()->success($tips);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function store(TipsFormRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        Tip::create($validated);
+        return response()->success('', 'Tips has been added to this content.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function update(TipsFormRequest $request, $id)
     {
-        //
+        $validated = $request->validated();
+
+        $tip = Tip::findOrFail($id);
+        $tip->text = $validated['text'];
+        $tip->save();
+
+        return response()->success('Tip has been updated.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function destroy(Request $request, $id)
     {
-        //
-    }
+        if (!$request->user()->tokenCan('data:delete')) {
+            return response()->error('You are not authorized to make that request.', 405);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        Tip::destroy($id);
+        return response()->success('Tip has been deleted.');
     }
 }

@@ -41,7 +41,7 @@ Route::prefix('/megatalking')->group(function() {
             Route::resource('/units', UnitsController::class);
             Route::resource('/videos', VideosController::class);
             Route::resource('/contents', ContentsController::class);
-            Route::resource('/tips', TipsController::class);
+            Route::resource('/tips', TipsController::class)->except(['show']);
         });
         Route::prefix('/pagoda')->group(function() {
 
