@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Megatalking\AuthController;
 use App\Http\Controllers\Megatalking\CoursesController;
+use App\Http\Controllers\Megatalking\Pagoda\UnitsController as PagodaUnitsController;
+use App\Http\Controllers\Megatalking\Pagoda\ViewsController;
 use App\Http\Controllers\Megatalking\UsersController;
 use App\Http\Controllers\Megatalking\VideoMaterial\ContentsController;
 use App\Http\Controllers\Megatalking\VideoMaterial\StepThreesController;
@@ -46,7 +48,8 @@ Route::prefix('/megatalking')->group(function() {
             Route::resource('/tips', TipsController::class)->except(['show']);
         });
         Route::prefix('/pagoda')->group(function() {
-
+            Route::resource('/units', PagodaUnitsController::class)->except(['index']);
+            Route::resource('/views', ViewsController::class)->only(['show', 'update']); 
         });
         Route::prefix('/webbooks')->group(function() {
 
